@@ -6,23 +6,17 @@ import boto3
 
 
 def labeler(bucket, name):
-    # Create a client object for Amazon Rekognition
+    """Takes an image name from a given bucket and returns labels from it"""
+    
     rekognition = boto3.client('rekognition')
-    
-    # Create a dictionary containing the S3 bucket and object key
     s3_object = {'Bucket': bucket, 'Name': name}
-    
-    # Call the detect_labels() method of the Rekognition client
     response = rekognition.detect_labels(Image={'S3Object': s3_object})
     
-    # Print the labels detected in the image
     for label in response['Labels']:
         click.echo(
-            click.style(f"{label['Name']}: {label['Confidence']}", fg="white", bg="red")    
+            click.style(f"{label['Name']}: {label['Confidence']}", fg="red")    
         )
         
-
-
 
 
 @click.command()
@@ -43,6 +37,8 @@ def labeler(bucket, name):
     help="Object Name - image - jungle.png"
 )
 def main(**kwargs):
+    """A tool for extracting labels from images"""
+    
     print(f"Bucket name: {kwargs.get('bucket')}\nObject name: {kwargs.get('name')}")
     labeler(kwargs.get('bucket'), kwargs.get('name'))
     
