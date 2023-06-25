@@ -1,0 +1,6 @@
+pytest==7.4.0
+pytest-cov==4.1.0
+black==23.3.0
+pylint==2.17.4
+boto3==1.26.160
+click==8.1.3
